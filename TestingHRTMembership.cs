@@ -89,8 +89,6 @@ namespace Membership
         {
 
             driver.Url = "https://mail.infomaniak.com/";
-           // Decoding hp = new Decoding();
-            //string testPassword = Decoding.GetDecodedPassword();
 
              string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_E");
              string password = Environment.GetEnvironmentVariable("YOUR_PASS_FOR_E");
