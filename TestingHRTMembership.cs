@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿#nullable disable // Disables nullable warnings for this file
+
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System;
@@ -148,3 +150,5 @@ namespace Membership
 
     }
 }
+
+#nullable restore // Restores nullable warnings to their previous state
