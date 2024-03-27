@@ -19,9 +19,9 @@ namespace Membership
         [SetUp]
         public void Setup()
         {
-           // var options = new ChromeOptions();
-           // options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver();
+            var options = new ChromeOptions();
+            options.AddArgument("--headless=new");
+            this.driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 
