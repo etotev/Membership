@@ -90,11 +90,11 @@ namespace Membership
            // Decoding hp = new Decoding();
             //string testPassword = Decoding.GetDecodedPassword();
 
-            //string username = Environment.GetEnvironmentVariable("USERNAME_ENV_VARIABLE");
-            //string password = Environment.GetEnvironmentVariable("PASSWORD_ENV_VARIABLE");
+             string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_E");
+             string password = Environment.GetEnvironmentVariable("YOUR_PASS_FOR_E");
 
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(YOUR_EMAIL_FOR_E);
-            driver.FindElement(By.Id("mat-input-1")).SendKeys(YOUR_PASS_FOR_E);
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
+            driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
 
 
@@ -112,9 +112,12 @@ namespace Membership
         {
             driver.Url = "https://hrtoday.ch/de/user/login";
 
+            string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_BE");
+            string password = Environment.GetEnvironmentVariable("YOUR_PW_FOR_BE");
+
             //Add credential, need to find a way to store securely this data
-            driver.FindElement(By.Id("edit-name")).SendKeys(YOUR_EMAIL_FOR_BE);
-            driver.FindElement(By.Id("edit-pass")).SendKeys(YOUR_PW_FOR_BE + Keys.Return);
+            driver.FindElement(By.Id("edit-name")).SendKeys(username);
+            driver.FindElement(By.Id("edit-pass")).SendKeys(password + Keys.Return);
 
             // Navigate to People page via toolbar
             driver.FindElement(By.Id("toolbar-item-administration")).Click();
