@@ -113,8 +113,8 @@ namespace Membership
             driver.Url = "https://hrtoday.ch/de/user/login";
 
             //Add credential, need to find a way to store securely this data
-            driver.FindElement(By.Id("edit-name")).SendKeys("evelin.totev@yanova.ch");
-            driver.FindElement(By.Id("edit-pass")).SendKeys("Vasilena1914!" + Keys.Return);
+            driver.FindElement(By.Id("edit-name")).SendKeys(YOUR_EMAIL_FOR_BE);
+            driver.FindElement(By.Id("edit-pass")).SendKeys(YOUR_PW_FOR_BE + Keys.Return);
 
             // Navigate to People page via toolbar
             driver.FindElement(By.Id("toolbar-item-administration")).Click();
