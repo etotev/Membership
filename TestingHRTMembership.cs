@@ -90,11 +90,11 @@ namespace Membership
            // Decoding hp = new Decoding();
             //string testPassword = Decoding.GetDecodedPassword();
 
-            string username = Environment.GetEnvironmentVariable("USERNAME_ENV_VARIABLE");
-            string password = Environment.GetEnvironmentVariable("PASSWORD_ENV_VARIABLE");
+            //string username = Environment.GetEnvironmentVariable("USERNAME_ENV_VARIABLE");
+            //string password = Environment.GetEnvironmentVariable("PASSWORD_ENV_VARIABLE");
 
-            driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
-            driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(YOUR_EMAIL_FOR_E);
+            driver.FindElement(By.Id("mat-input-1")).SendKeys(YOUR_PASS_FOR_E);
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
 
 
