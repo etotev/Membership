@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: main
+          token: ${{ secrets.PAT }}
 
     - name: Set up .NET Core SDK
       uses: actions/setup-dotnet@v1
