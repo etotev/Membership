@@ -1,0 +1,34 @@
+name: Membership HRT
+
+on: 
+  schedule:
+    - cron: '0 5 * * 1-5'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up .NET Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1'
+
+    - name: Build project
+      run: dotnet build
+
+    - name: Install Selenium WebDriver
+      run: dotnet add package Selenium.WebDriver --version 4.18.1
+
+    - name: Install Selenium WebDriver.ChromeDriver
+      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 123.0.6312.5800
+
+    - name: Run tests headlessly
+      run: dotnet test
+      env:
+        ASPNETCORE_ENVIRONMENT: Development
+        CHROME_BIN: /usr/bin/google-chrome
+        DISPLAY: :99.0
