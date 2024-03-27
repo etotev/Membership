@@ -34,7 +34,11 @@ jobs:
 
     - name: Run tests headlessly
       run: dotnet test
-      env:
+      env: 
+        YOUR_EMAIL_FOR_E: ${{ secrets.YOUR_EMAIL_FOR_E }}
+        YOUR_PASS_FOR_E: ${{ secrets.YOUR_PASS_FOR_E }}
+        YOUR_EMAIL_FOR_BE: ${{ secrets.YOUR_EMAIL_FOR_BE }}
+        YOUR_PW_FOR_BE: ${{ secrets.YOUR_PW_FOR_BE }}
         ASPNETCORE_ENVIRONMENT: Development
         CHROME_BIN: /usr/bin/google-chrome
         DISPLAY: :99.0
