@@ -2,7 +2,7 @@ name: Membership HRT
 
 on: 
   schedule:
-    - cron: '0 6 * * 1-5'
+    - cron: '5 * * * 1-5'
 
 jobs:
   test:
