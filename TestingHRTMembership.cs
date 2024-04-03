@@ -3,6 +3,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Text;
@@ -32,7 +33,7 @@ namespace Membership
 
         public void TearDown()
         {
-            driver.Quit();
+          driver.Quit();
         }
 
         [Test]
@@ -112,8 +113,8 @@ namespace Membership
             string password = Environment.GetEnvironmentVariable("YOUR_PW_FOR_BE");
 
             //Add credential, need to find a way to store securely this data
-            driver.FindElement(By.Id("edit-name")).SendKeys("evelin.totev@yanova.ch");
-            driver.FindElement(By.Id("edit-pass")).SendKeys("Vasilena1914!" + Keys.Return);
+            driver.FindElement(By.Id("edit-name")).SendKeys(username);
+            driver.FindElement(By.Id("edit-pass")).SendKeys(password + Keys.Return);
 
             // Navigate to People page via toolbar
             driver.FindElement(By.Id("toolbar-item-administration")).Click();
@@ -205,13 +206,28 @@ namespace Membership
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
             //  driver.FindElement(By.LinkText("Ja, melden Sie mich für den Newsletter an.")).Click();
+
+            string currentWindowHandle = driver.CurrentWindowHandle;
+
+
             driver.FindElement(By.LinkText("SCHLIESSEN SIE DIE REGISTRIERUNG AB")).Click();
 
 
-            //  string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[3]/div/p/text()")).Text;
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(driver => driver.WindowHandles.Count > 1);
 
-            //  Assert.Equals(confirmationMessage, ("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen.\r\n\r\n"));
-            Assert.That(true);
+            foreach (string windowHandle in driver.WindowHandles)
+            {
+                if (windowHandle != currentWindowHandle)
+                {
+                    driver.SwitchTo().Window(windowHandle);
+                    break;
+                }
+            }
+
+            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/div[2]/div/p")).Text;
+
+            Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Membership aktiviert. Sie können sich jetzt einloggen."));
         }
 
         [Test]
