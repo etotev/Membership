@@ -24,9 +24,10 @@ namespace Membership
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver();
+            this.driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            // Successfully tested on local machine
 
         }
         [TearDown]
@@ -87,8 +88,8 @@ namespace Membership
 
             driver.Url = "https://mail.infomaniak.com/";
 
-            string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_E");
-            string password = Environment.GetEnvironmentVariable("YOUR_PASS_FOR_E");
+            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
 
             driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
             driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
@@ -109,8 +110,9 @@ namespace Membership
         {
             driver.Url = "https://hrtoday.ch/de/user/login";
 
-            string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_BE");
-            string password = Environment.GetEnvironmentVariable("YOUR_PW_FOR_BE");
+
+            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            string password = Environment.GetEnvironmentVariable("HRT_PASS");
 
             //Add credential, need to find a way to store securely this data
             driver.FindElement(By.Id("edit-name")).SendKeys(username);
@@ -196,8 +198,9 @@ namespace Membership
 
             driver.Url = "https://mail.infomaniak.com/";
 
-            string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_E");
-            string password = Environment.GetEnvironmentVariable("YOUR_PASS_FOR_E");
+
+            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
 
             driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
             driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
@@ -235,8 +238,9 @@ namespace Membership
         {
             driver.Url = "https://www.missmoneypenny.ch/user/login";
 
-            string username = Environment.GetEnvironmentVariable("YOUR_EMAIL_FOR_BE");
-            string password = Environment.GetEnvironmentVariable("YOUR_PW_FOR_BE_MMP");
+            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            string password = Environment.GetEnvironmentVariable("MMP_PASS");
+
 
             //Add credential, need to find a way to store securely this data
             driver.FindElement(By.Id("edit-name")).SendKeys(username);
