@@ -1,8 +1,9 @@
 name: Membership HRT
 
 on: 
+  workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'
+      - cron:  '0 5 * * *'
 
 jobs:
   test:
@@ -35,10 +36,10 @@ jobs:
     - name: Run tests headlessly
       run: dotnet test
       env: 
-        YOUR_EMAIL_FOR_E: ${{ secrets.YOUR_EMAIL_FOR_E }}
-        YOUR_PASS_FOR_E: ${{ secrets.YOUR_PASS_FOR_E }}
-        YOUR_EMAIL_FOR_BE: ${{ secrets.YOUR_EMAIL_FOR_BE }}
-        YOUR_PW_FOR_BE: ${{ secrets.YOUR_PW_FOR_BE }}
+        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+        HRT_PASS: ${{ secrets.HRT_PASS }}
+        MMP_PASS: ${{ secrets.MMP_PASS }}
         ASPNETCORE_ENVIRONMENT: Development
         CHROME_BIN: /usr/bin/google-chrome
         DISPLAY: :99.0
