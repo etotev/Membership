@@ -24,7 +24,7 @@ namespace Membership
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver(options);
+            this.driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Successfully tested on local machine
@@ -95,6 +95,8 @@ namespace Membership
             driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
 
+            // go to search field
+            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestellbestätigung" + Keys.Return);
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
             driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
@@ -190,7 +192,7 @@ namespace Membership
 
             Assert.That(textConfirmation.Equals("Sie haben auf evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership erhalten mit allen wichtigen Informationen zu App, E-Paper, Events ..."));
         }
-
+       
         [Test]
 
         public void eValidateMembershipMMP()
@@ -198,13 +200,15 @@ namespace Membership
 
             driver.Url = "https://mail.infomaniak.com/";
 
-
             string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
             string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
 
             driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
             driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
+
+            // go to search field
+            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestellbestätigung" + Keys.Return);
 
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
