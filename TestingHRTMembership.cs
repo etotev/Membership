@@ -24,7 +24,7 @@ namespace Membership
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver(options);
+            this.driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Successfully tested on local machine
@@ -99,12 +99,37 @@ namespace Membership
             driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestellbestätigung" + Keys.Return);
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
+
+            string currentWindowHandle = driver.CurrentWindowHandle;
+
             driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
 
-            //  string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[3]/div/p/text()")).Text;
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(driver => driver.WindowHandles.Count > 1);
 
-            //  Assert.Equals(confirmationMessage, ("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen.\r\n\r\n"));
-            Assert.That(true);
+            foreach (string windowHandle in driver.WindowHandles)
+            {
+                if (windowHandle != currentWindowHandle)
+                {
+                    driver.SwitchTo().Window(windowHandle);
+                    break;
+                }
+            }
+
+            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[3]/div/p")).Text;
+
+            Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen."));
+
+            // close confirmation tab and delete all messages in the email
+
+            driver.Close();
+            driver.SwitchTo().Window(currentWindowHandle);
+
+            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/app-mail-header/app-header/mat-toolbar/div/app-mail-search/div/button[2]")).Click();
+
+            driver.FindElement(By.XPath("/html//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//ik-layout//div[@class='main-content']/div/app-mail-main[@class='ng-star-inserted']/div/div[@class='mail-list']//app-responsive-toolbar[@class='ng-star-inserted']//div[@class='responsive-toolbar__list']/div[1]//mat-checkbox//span[@class='mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin']")).Click();
+
+            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
         [Test]
@@ -235,6 +260,17 @@ namespace Membership
             string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/div[2]/div/p")).Text;
 
             Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Membership aktiviert. Sie können sich jetzt einloggen."));
+
+            // Close the current tab and go to delete all emails
+
+            driver.Close();
+            driver.SwitchTo().Window(currentWindowHandle);
+
+            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/app-mail-header/app-header/mat-toolbar/div/app-mail-search/div/button[2]")).Click();
+
+            driver.FindElement(By.XPath("/html//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//ik-layout//div[@class='main-content']/div/app-mail-main[@class='ng-star-inserted']/div/div[@class='mail-list']//app-responsive-toolbar[@class='ng-star-inserted']//div[@class='responsive-toolbar__list']/div[1]//mat-checkbox//span[@class='mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin']")).Click();
+
+            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
         [Test]
