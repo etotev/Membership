@@ -24,7 +24,7 @@ namespace Membership
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver(options);
+            this.driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Successfully tested on local machine
@@ -34,7 +34,7 @@ namespace Membership
 
         public void TearDown()
         {
-         // driver.Quit();
+         driver.Quit();
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace Membership
 
             //step 4
             driver.FindElement(By.Id("edit-shipping-post-code")).SendKeys("333");
-            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test" + Keys.Return);
-
+            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test");
+            driver.FindElement(By.Id("edit-email-digital-invoice")).SendKeys("evelin.totev+1@yanova.ch" + Keys.Return);
 
             // Step 5
 
