@@ -24,7 +24,7 @@ namespace Membership
         {
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver(options);
+            this.driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Successfully tested on local machine
