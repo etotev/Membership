@@ -201,8 +201,8 @@ namespace Membership
 
             //step 4
             driver.FindElement(By.Id("edit-shipping-post-code")).SendKeys("333");
-            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test" + Keys.Return);
-
+            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test");
+            driver.FindElement(By.Id("edit-email-digital-invoice")).SendKeys("evelin.totev+1@yanova.ch" + Keys.Return);
 
             // Step 5
 
@@ -212,7 +212,7 @@ namespace Membership
 
             var element2 = driver.FindElement(By.CssSelector("input#edit-continue"));
             actions.MoveToElement(element2).Click().Build().Perform();
-
+         
             string textConfirmation = driver.FindElement(By.XPath("//*[@id=\"newmembership-register-success-form\"]/div[2]/p[1]")).Text;
 
             Assert.That(textConfirmation.Equals("Sie haben auf evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership erhalten mit allen wichtigen Informationen zu App, E-Paper, Events ..."));
