@@ -34,7 +34,7 @@ namespace Membership
 
         public void TearDown()
         {
-          driver.Quit();
+         driver.Quit();
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace Membership
 
             //step 4
             driver.FindElement(By.Id("edit-shipping-post-code")).SendKeys("333");
-            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test" + Keys.Return);
-
+            driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test");
+            driver.FindElement(By.Id("edit-email-digital-invoice")).SendKeys("evelin.totev+1@yanova.ch" + Keys.Return);
 
             // Step 5
 
@@ -125,9 +125,9 @@ namespace Membership
             driver.Close();
             driver.SwitchTo().Window(currentWindowHandle);
 
-            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/app-mail-header/app-header/mat-toolbar/div/app-mail-search/div/button[2]")).Click();
+            driver.FindElement(By.XPath("//*[@id=\"step2\"]/div[1]/div/div[1]/span[1]")).Click();
 
-            driver.FindElement(By.XPath("/html//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//ik-layout//div[@class='main-content']/div/app-mail-main[@class='ng-star-inserted']/div/div[@class='mail-list']//app-responsive-toolbar[@class='ng-star-inserted']//div[@class='responsive-toolbar__list']/div[1]//mat-checkbox//span[@class='mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin']")).Click();
+            driver.FindElement(By.XPath("//*[@id=\"mat-checkbox-1\"]/label/span[1]")).Click();
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
@@ -266,7 +266,7 @@ namespace Membership
             driver.Close();
             driver.SwitchTo().Window(currentWindowHandle);
 
-            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/app-mail-header/app-header/mat-toolbar/div/app-mail-search/div/button[2]")).Click();
+            driver.FindElement(By.XPath("//*[@id=\"step2\"]/div[1]/div/div[1]/span[1]")).Click();
 
             driver.FindElement(By.XPath("/html//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//ik-layout//div[@class='main-content']/div/app-mail-main[@class='ng-star-inserted']/div/div[@class='mail-list']//app-responsive-toolbar[@class='ng-star-inserted']//div[@class='responsive-toolbar__list']/div[1]//mat-checkbox//span[@class='mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin']")).Click();
 
@@ -313,6 +313,25 @@ namespace Membership
             string message = driver.FindElement(By.XPath("/html/body/div[2]/div/main/div[2]/div[2]/div")).Text;
 
             Assert.That(message.Contains("wurde gelöscht"));
+        }
+
+        [Test]
+
+        public void gDeleteAllMessages()
+        {
+
+            driver.Url = "https://mail.infomaniak.com/";
+
+            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
+
+            driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
+            driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
+            driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
+
+            driver.FindElement(By.XPath("/html//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//ik-layout//div[@class='main-content']/div/app-mail-main[@class='ng-star-inserted']/div/div[@class='mail-list']//app-responsive-toolbar[@class='ng-star-inserted']//div[@class='responsive-toolbar__list']/div[1]//mat-checkbox//span[@class='mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin']")).Click();
+
+            driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
     }
 }
