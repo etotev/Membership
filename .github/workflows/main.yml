@@ -27,7 +27,7 @@ jobs:
       run: dotnet add package Selenium.WebDriver --version 4.21.0
 
     - name: Install Selenium WebDriver.ChromeDriver
-      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 123.0.6312.5800
+      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 125.0.6422.7800
     - name: Set up Node.js 20
       uses: actions/setup-node@v3
       with:
