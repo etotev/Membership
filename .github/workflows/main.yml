@@ -24,7 +24,7 @@ jobs:
       run: dotnet build
 
     - name: Install Selenium WebDriver
-      run: dotnet add package Selenium.WebDriver --version 4.21.0
+      run: dotnet add package Selenium.WebDriver --version 4.23.0
 
     - name: Install Selenium WebDriver.ChromeDriver
       run: dotnet add package Selenium.WebDriver.ChromeDriver --version 125.0.6422.7800
