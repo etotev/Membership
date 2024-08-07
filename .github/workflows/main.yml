@@ -3,7 +3,7 @@ name: Membership HRT
 on: 
   workflow_dispatch:
   schedule:
-      - cron:  '0 5 * * *'
+    - cron:  '0 5 * * *'
 
 jobs:
   test:
@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-          token: ${{ secrets.PAT }}
+        token: ${{ secrets.PAT }}
 
     - name: Set up .NET Core SDK
       uses: actions/setup-dotnet@v1
@@ -28,13 +28,14 @@ jobs:
 
     - name: Install Selenium WebDriver.ChromeDriver
       run: dotnet add package Selenium.WebDriver.ChromeDriver --version 125.0.6422.7800
-    - name: Set up Node.js 20
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16'
+
+    - name: Install Chrome browser
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
 
     - name: Run tests headlessly
-      run: dotnet test
+      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test
       env: 
         EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
