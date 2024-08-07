@@ -7,8 +7,6 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Text;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
 
 namespace Membership
 {
@@ -24,7 +22,6 @@ namespace Membership
         [SetUp]
         public void Setup()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
             options.AddArgument("--disable-search-engine-choice-screen");
