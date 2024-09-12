@@ -7,6 +7,8 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Text;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
 
 namespace Membership
 {
@@ -22,9 +24,11 @@ namespace Membership
         [SetUp]
         public void Setup()
         {
+            new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
-            this.driver = new ChromeDriver();
+            options.AddArgument("--disable-search-engine-choice-screen");
+            this.driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
             // Successfully tested on local machine
@@ -48,14 +52,14 @@ namespace Membership
             driver.FindElement(By.Id("edit-last-name-1")).SendKeys("Yanova");
             driver.FindElement(By.Id("edit-email-1")).SendKeys("evelin.totev+1@yanova.ch");
             driver.FindElement(By.Id("edit-password-1-pass1")).SendKeys("Abc123456!!!");
-            driver.FindElement(By.Id("edit-password-1-pass2")).SendKeys("Abc123456!!!");
-            driver.FindElement(By.Id("edit-continue")).Click();
+            driver.FindElement(By.Id("edit-password-1-pass2")).SendKeys("Abc123456!!!" + Keys.Enter);
+            //driver.FindElement(By.Id("edit-continue")).Click();
 
             //step 2
             driver.FindElement(By.Id("edit-company-organization")).SendKeys("TestOrganisation");
             driver.FindElement(By.Id("edit-function")).SendKeys("TestFunction");
-            driver.FindElement(By.Id("edit-telephone-store")).SendKeys("3333323232");
-            driver.FindElement(By.Id("edit-continue")).Click();
+            driver.FindElement(By.Id("edit-telephone-store")).SendKeys("3333323232" + Keys.Enter);
+            //driver.FindElement(By.Id("edit-continue")).Click();
 
             //step 3
             driver.FindElement(By.XPath("//div[@id='edit-delivery-option']/div[2]/label[@class='option']")).Click();
@@ -185,15 +189,13 @@ namespace Membership
             driver.FindElement(By.Id("edit-last-name-1")).SendKeys("Yanova");
             driver.FindElement(By.Id("edit-email-1")).SendKeys("evelin.totev+1@yanova.ch");
             driver.FindElement(By.Id("edit-password-1-pass1")).SendKeys("Abc123456!!!");
-            driver.FindElement(By.Id("edit-password-1-pass2")).SendKeys("Abc123456!!!");
-            driver.FindElement(By.Id("edit-continue")).Click();
+            driver.FindElement(By.Id("edit-password-1-pass2")).SendKeys("Abc123456!!!" + Keys.Enter);
 
             //step 2
             driver.FindElement(By.Id("edit-company-organization")).SendKeys("TestOrganisation");
             driver.FindElement(By.Id("edit-function")).SendKeys("TestFunction");
             driver.FindElement(By.Id("edit-private-telephone")).SendKeys("3333323232");
-            driver.FindElement(By.Id("edit-telephone-store")).SendKeys("3333323232");
-            driver.FindElement(By.Id("edit-continue")).Click();
+            driver.FindElement(By.Id("edit-telephone-store")).SendKeys("3333323232" + Keys.Enter);
 
             //step 3
             driver.FindElement(By.XPath("//div[@id='edit-delivery-option']/div[2]/label[@class='option']")).Click();
@@ -202,6 +204,7 @@ namespace Membership
             //step 4
             driver.FindElement(By.Id("edit-shipping-post-code")).SendKeys("333");
             driver.FindElement(By.Id("edit-shipping-place")).SendKeys("Test" + Keys.Return);
+            driver.FindElement(By.Id("edit-email-digital-invoice")).SendKeys("evelin.totev+1@yanova.ch" + Keys.Return);
 
 
             // Step 5
