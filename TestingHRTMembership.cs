@@ -4,18 +4,8 @@ namespace Membership
 {
     public class Tests : Base
     {
-        public static IEnumerable<TestCaseData> MembershipValidatorMMP()
-        {
-            yield return new TestCaseData("MMP").SetName("MMP");
-        }
-
-        public static IEnumerable<TestCaseData> MembershipValidatorHR()
-        {
-            yield return new TestCaseData("HR").SetName("HR");
-        }
-
-        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
-        public void aCreate_User(string env)
+        [Test]
+        public void aCreate_User_HR()
         {
 
             driver.Url = "https://www.hrtoday.ch/de/newmembership/einzel/step1";
@@ -57,8 +47,8 @@ namespace Membership
         }
 
 
-        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
-        public void bValidateMembership(string env)
+        [Test]
+        public void bValidateMembership_HR()
         {
 
             driver.Url = "https://mail.infomaniak.com/";
@@ -107,8 +97,8 @@ namespace Membership
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
-        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
-        public void cDelete_User_From_Backend(string env)
+        [Test]
+        public void cDelete_User_From_Backend_HR()
         {
             driver.Url = "https://hrtoday.ch/de/user/login";
 
@@ -149,8 +139,8 @@ namespace Membership
 
 
 
-        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
-        public void dCreate_User_MMP(string env)
+        [Test]
+        public void dCreate_User_MMP()
         {
 
             driver.Url = "https://www.missmoneypenny.ch/newmembership/einzel/step1";
@@ -192,9 +182,9 @@ namespace Membership
             Assert.That(textConfirmation.Equals("Sie haben auf evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership erhalten mit allen wichtigen Informationen zu App, E-Paper, Events ..."));
         }
 
-        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
+        [Test]
 
-        public void eValidateMembershipMMP(string env)
+        public void eValidateMembership_MMP()
         {
 
             driver.Url = "https://mail.infomaniak.com/";
@@ -247,8 +237,8 @@ namespace Membership
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
-        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
-        public void fDelete_User_From_Backend_MMP(string env)
+        [Test]
+        public void fDelete_User_From_Backend_MMP()
         {
             driver.Url = "https://www.missmoneypenny.ch/user/login";
 
@@ -289,10 +279,9 @@ namespace Membership
             Assert.That(message.Contains("wurde gelöscht"));
         }
 
-        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
-        public void gDeleteAllMessages(string env)
+        [Test]
+        public void gDeleteAllMessages_MMP_HR()
         {
-
             driver.Url = "https://mail.infomaniak.com/";
 
             string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
