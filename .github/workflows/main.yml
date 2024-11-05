@@ -34,8 +34,8 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
-    - name: Run tests headlessly for tests with SetName 'MMP'
-      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test --filter "TestCaseSource('MembershipValidatorMMP')"
+    - name: Run tests headlessly
+      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test --filter "TestName~MMP"
       env: 
         EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
