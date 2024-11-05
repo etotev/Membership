@@ -1,48 +1,21 @@
 ﻿#nullable disable // Disables nullable warnings for this file
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.IO;
-using System.Text;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
-
 namespace Membership
 {
-    public class Tests
-
+    public class Tests : Base
     {
-
-#pragma warning disable NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
-        private WebDriver driver;
-#pragma warning restore NUnit1032 // An IDisposable field/property should be Disposed in a TearDown method
-
-
-        [SetUp]
-        public void Setup()
+        public static IEnumerable<TestCaseData> MembershipValidatorMMP()
         {
-           // new DriverManager().SetUpDriver(new ChromeConfig());
-            var options = new ChromeOptions();
-            options.AddArgument("--headless=new");
-            options.AddArgument("--disable-search-engine-choice-screen");
-            this.driver = new ChromeDriver(options);
-            driver.Manage().Window.Maximize();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-            // Successfully tested on local machine
-
-        }
-        [TearDown]
-
-        public void TearDown()
-        {
-         driver.Quit();
+            yield return new TestCaseData("MMP").SetName("MMP");
         }
 
-        [Test]
-        public void aCreate_User()
+        public static IEnumerable<TestCaseData> MembershipValidatorHR()
+        {
+            yield return new TestCaseData("HR").SetName("HR");
+        }
+
+        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
+        public void aCreate_User(string env)
         {
 
             driver.Url = "https://www.hrtoday.ch/de/newmembership/einzel/step1";
@@ -53,7 +26,6 @@ namespace Membership
             driver.FindElement(By.Id("edit-email-1")).SendKeys("evelin.totev+1@yanova.ch");
             driver.FindElement(By.Id("edit-password-1-pass1")).SendKeys("Abc123456!!!");
             driver.FindElement(By.Id("edit-password-1-pass2")).SendKeys("Abc123456!!!" + Keys.Enter);
-            //driver.FindElement(By.Id("edit-continue")).Click();
 
             //step 2
             driver.FindElement(By.Id("edit-company-organization")).SendKeys("TestOrganisation");
@@ -85,9 +57,8 @@ namespace Membership
         }
 
 
-        [Test]
-
-        public void bValidateMembership()
+        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
+        public void bValidateMembership(string env)
         {
 
             driver.Url = "https://mail.infomaniak.com/";
@@ -136,8 +107,8 @@ namespace Membership
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
-        [Test]
-        public void cDelete_User_From_Backend()
+        [Test, TestCaseSource(nameof(MembershipValidatorHR))]
+        public void cDelete_User_From_Backend(string env)
         {
             driver.Url = "https://hrtoday.ch/de/user/login";
 
@@ -178,8 +149,8 @@ namespace Membership
 
 
 
-        [Test]
-        public void dCreate_User_MMP()
+        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
+        public void dCreate_User_MMP(string env)
         {
 
             driver.Url = "https://www.missmoneypenny.ch/newmembership/einzel/step1";
@@ -220,10 +191,10 @@ namespace Membership
 
             Assert.That(textConfirmation.Equals("Sie haben auf evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership erhalten mit allen wichtigen Informationen zu App, E-Paper, Events ..."));
         }
-       
-        [Test]
 
-        public void eValidateMembershipMMP()
+        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
+
+        public void eValidateMembershipMMP(string env)
         {
 
             driver.Url = "https://mail.infomaniak.com/";
@@ -276,8 +247,8 @@ namespace Membership
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[1]/div[1]/app-responsive-toolbar/div/div[1]/div[8]/app-btn-link-cta/span/button")).Click();
         }
 
-        [Test]
-        public void fDelete_User_From_Backend_MMP()
+        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
+        public void fDelete_User_From_Backend_MMP(string env)
         {
             driver.Url = "https://www.missmoneypenny.ch/user/login";
 
@@ -318,9 +289,8 @@ namespace Membership
             Assert.That(message.Contains("wurde gelöscht"));
         }
 
-        [Test]
-
-        public void gDeleteAllMessages()
+        [Test, TestCaseSource(nameof(MembershipValidatorMMP))]
+        public void gDeleteAllMessages(string env)
         {
 
             driver.Url = "https://mail.infomaniak.com/";
