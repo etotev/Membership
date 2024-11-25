@@ -35,7 +35,7 @@ jobs:
         sudo apt-get install -y google-chrome-stable
 
     - name: Run tests headlessly
-      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test --filter "FullyQualifiedName~MMP"
+      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test
       env: 
         EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
@@ -44,3 +44,5 @@ jobs:
         ASPNETCORE_ENVIRONMENT: Development
         CHROME_BIN: /usr/bin/google-chrome
         DISPLAY: :99.0
+
+     # if you want to run only MMP tests just add this next to dotnet test: --filter "FullyQualifiedName~MMP"
