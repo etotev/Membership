@@ -14,6 +14,7 @@ namespace Membership
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
             options.AddArgument("--disable-search-engine-choice-screen");
+            options.AddArgument("no-sandbox");
             this.driver = new ChromeDriver(options);
             driver.Manage().Window.Maximize();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
