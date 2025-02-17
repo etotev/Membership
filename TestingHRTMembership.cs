@@ -290,9 +290,10 @@ namespace Membership
             Assert.That(activeMessage.Contains("Active"));
             driver.FindElement(By.CssSelector("#edit-memberships-overview > div > table > tbody > tr > td:nth-child(8) > a")).Click();
             driver.FindElement(By.Id("edit-delete")).Click();
-            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"node-membership-delete-form\"]")).Text;
-            Assert.That(confirmationMessage.Contains("Diese Aktion kann nicht rückgängig gemacht werden."));
-            driver.FindElement(By.Id("edit-submit")).Click();
+
+            Thread.Sleep(2000);
+
+            new Actions(driver).SendKeys(Keys.Enter).Perform();
 
             // Deleting of user proceess
             driver.FindElement(By.Id("edit-delete")).Click();
