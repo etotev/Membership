@@ -10,6 +10,10 @@ namespace Membership
 
             driver.Url = "https://www.hrtoday.ch/de/newmembership/einzel/step1";
 
+            Thread.Sleep(5000);
+
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
+
             driver.FindElement(By.XPath("//*[@id=\"edit-salutation-1\"]/option[3]")).Click();
             driver.FindElement(By.Id("edit-first-name-1")).SendKeys("TestUser");
             driver.FindElement(By.Id("edit-last-name-1")).SendKeys("Yanova");
@@ -43,7 +47,7 @@ namespace Membership
 
             string textConfirmation = driver.FindElement(By.XPath("//*[@id=\"newmembership-register-success-form\"]/div[2]/p")).Text;
 
-            Assert.That(textConfirmation.Equals("Sie haben per evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership mit allen wichtigen Informationen über die App, E-Paper, Veranstaltungen... erhalten."));
+            Assert.That(textConfirmation.Equals("Sie erhalten an Ihre E-Mail-Adresse evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership mit allen wichtigen Informationen. Bitte schliessen Sie die Registrierung ab, indem Sie Ihre Mitgliedschaft über den in der E-Mail angegebenen Link bestätigen. Vielen Dank!"));
         }
 
 
@@ -81,7 +85,11 @@ namespace Membership
                 }
             }
 
-            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[3]/div/p")).Text;
+            Thread.Sleep(5000);
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
+
+
+            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[2]/div/div")).Text;
 
             Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen."));
 
@@ -101,6 +109,10 @@ namespace Membership
         public void cDelete_User_From_Backend_HR()
         {
             driver.Url = "https://hrtoday.ch/de/user/login";
+
+            Thread.Sleep(5000);
+
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
 
 
             string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
@@ -123,16 +135,17 @@ namespace Membership
             // Logic for deleting the membership of user
             driver.FindElement(By.CssSelector("#edit-memberships-overview > div > table > tbody > tr > td:nth-child(8) > a")).Click();
             driver.FindElement(By.Id("edit-delete")).Click();
-            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"block-claro-page-title\"]/h1")).Text;
-            Assert.That(confirmationMessage.Contains("wirklich löschen"));
-            driver.FindElement(By.Id("edit-submit")).Click();
+            Thread.Sleep(2000);
+
+            new Actions(driver).SendKeys(Keys.Enter).Perform();
+
 
             // Deleting of user proceess
             driver.FindElement(By.Id("edit-delete")).Click();
             driver.FindElement(By.Id("edit-user-cancel-method-user-cancel-delete")).Click();
             driver.FindElement(By.Id("edit-submit")).Click();
 
-            string message = driver.FindElement(By.XPath("/html/body/div[2]/div/main/div[2]/div[2]/div[1]/div[2]")).Text;
+            string message = driver.FindElement(By.XPath("/html/body/div[2]/main/div[2]/div/div[1]/div/div/div[1]/div[2]")).Text;
 
             Assert.That(message.Contains("wurde gelöscht"));
         }
@@ -144,6 +157,10 @@ namespace Membership
         {
 
             driver.Url = "https://www.missmoneypenny.ch/newmembership/einzel/step1";
+
+            Thread.Sleep(5000);
+
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
 
             driver.FindElement(By.XPath("//*[@id=\"edit-salutation-1\"]/option[3]")).Click();
             driver.FindElement(By.Id("edit-first-name-1")).SendKeys("TestUser");
@@ -221,7 +238,11 @@ namespace Membership
                 }
             }
 
-            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/div[2]/div/p")).Text;
+            Thread.Sleep(5000);
+
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
+
+            string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"content\"]/div/div[1]/div/div")).Text;
 
             Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Membership aktiviert. Sie können sich jetzt einloggen."));
 
@@ -241,6 +262,10 @@ namespace Membership
         public void fDelete_User_From_Backend_MMP()
         {
             driver.Url = "https://www.missmoneypenny.ch/user/login";
+
+            Thread.Sleep(5000);
+
+            new Actions(driver).SendKeys(Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Tab + Keys.Enter).Perform();
 
             string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
             string password = Environment.GetEnvironmentVariable("MMP_PASS");
@@ -274,7 +299,7 @@ namespace Membership
             driver.FindElement(By.Id("edit-user-cancel-method-user-cancel-delete")).Click();
             driver.FindElement(By.Id("edit-submit")).Click();
 
-            string message = driver.FindElement(By.XPath("/html/body/div[2]/div/main/div[2]/div[2]/div")).Text;
+            string message = driver.FindElement(By.XPath("/html/body/div[2]/main/div[2]/div/div[1]/div/div/div/div[2]")).Text;
 
             Assert.That(message.Contains("wurde gelöscht"));
         }

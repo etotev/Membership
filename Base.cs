@@ -10,7 +10,7 @@ namespace Membership
         [SetUp]
         public void Setup()
         {
-            // new DriverManager().SetUpDriver(new ChromeConfig());
+            new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
             options.AddArgument("--headless=new");
             options.AddArgument("--disable-search-engine-choice-screen");
