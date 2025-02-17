@@ -12,7 +12,7 @@ namespace Membership
         {
             new DriverManager().SetUpDriver(new ChromeConfig());
             var options = new ChromeOptions();
-            //options.AddArgument("--headless=new");
+            options.AddArgument("--headless=new");
             options.AddArgument("--disable-search-engine-choice-screen");
             options.AddArgument("no-sandbox");
             this.driver = new ChromeDriver(options);
