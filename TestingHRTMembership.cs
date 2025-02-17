@@ -124,7 +124,7 @@ namespace Membership
 
             // Navigate to People page via toolbar
             driver.FindElement(By.Id("toolbar-item-administration")).Click();
-            driver.FindElement(By.LinkText("People")).Click();
+            driver.FindElement(By.LinkText("Benutzer")).Click();
 
             // Find user by email and open it
             string emailAddressToDelete = "evelin.totev+1@yanova.ch";
@@ -277,7 +277,7 @@ namespace Membership
 
             // Navigate to People page via toolbar
             driver.FindElement(By.Id("toolbar-item-administration")).Click();
-            driver.FindElement(By.LinkText("People")).Click();
+            driver.FindElement(By.LinkText("Benutzer")).Click();
 
             // Find user by email and open it
             string emailAddressToDelete = "evelin.totev+1@yanova.ch";
