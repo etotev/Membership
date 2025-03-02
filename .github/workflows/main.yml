@@ -3,7 +3,7 @@ name: Membership HRT
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * *'
+    - cron: '0 5 * * *' # Стартиране всеки ден в 05:00
 
 jobs:
   test:
@@ -26,7 +26,7 @@ jobs:
       - name: Extract Selenium.WebDriver version
         id: selenium_version
         run: |
-          SELENIUM_VERSION=$(grep 'Selenium.WebDriver' Membership.csproj | grep -oP '(?<=Version=")[0-9]+\.[0-9]+\.[0-9]+')
+          SELENIUM_VERSION=$(grep '<PackageReference Include="Selenium.WebDriver"' Membership.csproj | grep -oP '(?<=Version=")[0-9]+\.[0-9]+\.[0-9]+')
           echo "Detected Selenium.WebDriver version: $SELENIUM_VERSION"
           echo "SELENIUM_VERSION=$SELENIUM_VERSION" >> $GITHUB_ENV
 
@@ -54,6 +54,7 @@ jobs:
           ASPNETCORE_ENVIRONMENT: Development
           CHROME_BIN: /usr/bin/google-chrome
           DISPLAY: :99.0
+
 
 
      # if you want to run only MMP tests just add this next to dotnet test: --filter "FullyQualifiedName~MMP"
