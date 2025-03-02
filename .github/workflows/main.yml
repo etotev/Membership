@@ -3,46 +3,57 @@ name: Membership HRT
 on: 
   workflow_dispatch:
   schedule:
-    - cron:  '0 5 * * *'
+    - cron: '0 5 * * *' # Стартиране всеки ден в 05:00
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        token: ${{ secrets.PAT }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
 
-    - name: Set up .NET Core SDK
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x' # Use the appropriate version
+      - name: Set up .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
 
-    - name: Build project
-      run: dotnet build
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Install Selenium WebDriver
-      run: dotnet add package Selenium.WebDriver --version 4.23.0
+      - name: Extract Selenium.WebDriver version
+        id: selenium_version
+        run: |
+          SELENIUM_VERSION=$(grep 'Selenium.WebDriver' Membership/Membership.csproj | grep -oP '(?<=Version=")[^"]+')
+          echo "Detected Selenium.WebDriver version: $SELENIUM_VERSION"
+          echo "SELENIUM_VERSION=$SELENIUM_VERSION" >> $GITHUB_ENV
 
-    - name: Install Selenium WebDriver.ChromeDriver
-      run: dotnet add package Selenium.WebDriver.ChromeDriver --version 125.0.6422.7800
+      - name: Ensure correct Selenium versions
+        run: |
+          dotnet add package Selenium.WebDriver --version $SELENIUM_VERSION
+          dotnet add package Selenium.WebDriver.ChromeDriver --version 125.0.6422.7800
+          dotnet restore
 
-    - name: Install Chrome browser
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
+      - name: Build project
+        run: dotnet build --no-restore
 
-    - name: Run tests headlessly
-      run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test
-      env: 
-        EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
-        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        HRT_PASS: ${{ secrets.HRT_PASS }}
-        MMP_PASS: ${{ secrets.MMP_PASS }}
-        ASPNETCORE_ENVIRONMENT: Development
-        CHROME_BIN: /usr/bin/google-chrome
-        DISPLAY: :99.0
+      - name: Install Chrome browser
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run tests headlessly
+        run: xvfb-run --auto-servernum --server-args='-screen 0 1920x1080x24' dotnet test
+        env: 
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          HRT_PASS: ${{ secrets.HRT_PASS }}
+          MMP_PASS: ${{ secrets.MMP_PASS }}
+          ASPNETCORE_ENVIRONMENT: Development
+          CHROME_BIN: /usr/bin/google-chrome
+          DISPLAY: :99.0
+
 
      # if you want to run only MMP tests just add this next to dotnet test: --filter "FullyQualifiedName~MMP"
