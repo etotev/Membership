@@ -65,7 +65,7 @@ namespace Membership
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
 
             // go to search field
-            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestellbestätigung" + Keys.Return);
+            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestätigung der Bestellung" + Keys.Return);
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
 
@@ -214,7 +214,7 @@ namespace Membership
             driver.FindElement(By.XPath("//*[@id=\"infomaniak_login_form\"]/div[2]/button")).Click();
 
             // go to search field
-            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestellbestätigung" + Keys.Return);
+            driver.FindElement(By.XPath("//app-root/app-mail[@class='ng-star-inserted']/app-main[@class='ng-star-inserted']//app-mail-header[@class='app-header']/app-header//app-mail-search[@class='ng-star-inserted']//input[@name='search']")).SendKeys("Bestätigung der Bestellung" + Keys.Return);
 
 
             driver.FindElement(By.XPath("/html/body/app-root/app-mail/app-main/div[1]/div/ik-layout/div/div/div/app-mail-main/div/div[1]/div[2]/div[1]/app-mail-list/div[2]/app-mail-list-item[1]")).Click();
@@ -223,7 +223,7 @@ namespace Membership
             string currentWindowHandle = driver.CurrentWindowHandle;
 
 
-            driver.FindElement(By.LinkText("SCHLIESSEN SIE DIE REGISTRIERUNG AB")).Click();
+            driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
 
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
