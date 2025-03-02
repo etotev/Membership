@@ -3,7 +3,7 @@ name: Membership HRT
 on: 
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * *' # Стартиране всеки ден в 05:00
+    - cron: '0 5 * * *'
 
 jobs:
   test:
@@ -26,7 +26,7 @@ jobs:
       - name: Extract Selenium.WebDriver version
         id: selenium_version
         run: |
-          SELENIUM_VERSION=$(grep 'Selenium.WebDriver' Membership.csproj | grep -oP '(?<=Version=")[^"]+')
+          SELENIUM_VERSION=$(grep 'Selenium.WebDriver' Membership.csproj | grep -oP '(?<=Version=")[0-9]+\.[0-9]+\.[0-9]+')
           echo "Detected Selenium.WebDriver version: $SELENIUM_VERSION"
           echo "SELENIUM_VERSION=$SELENIUM_VERSION" >> $GITHUB_ENV
 
