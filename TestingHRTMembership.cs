@@ -59,8 +59,10 @@ namespace Membership
 
             driver.Url = "https://mail.infomaniak.com/";
 
-            string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
-            string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
+            // string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
+            //string password = Environment.GetEnvironmentVariable("EMAIL_PASS");
+            string username = "evelin.totev@yanova.ch";
+            string password = "ACdc1914!";
 
             driver.FindElement(By.Id("mat-input-0")).SendKeys(username);
             driver.FindElement(By.Id("mat-input-1")).SendKeys(password);
@@ -273,7 +275,6 @@ namespace Membership
 
             string username = Environment.GetEnvironmentVariable("EMAIL_ADDRESS");
             string password = Environment.GetEnvironmentVariable("MMP_PASS");
-
 
             //Add credential, need to find a way to store securely this data
             driver.FindElement(By.Id("edit-name")).SendKeys(username);
