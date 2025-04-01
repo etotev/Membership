@@ -227,8 +227,8 @@ namespace Membership
             string currentWindowHandle = driver.CurrentWindowHandle;
 
 
-            driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
-
+            //driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
+            driver.FindElement(By.LinkText("E-MAIL BESTÄTIGEN UND REGISTRIERUNG ABSCHLIESSEN")).Click();
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(driver => driver.WindowHandles.Count > 1);
