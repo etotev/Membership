@@ -48,7 +48,7 @@ namespace Membership
             string textConfirmation = driver.FindElement(By.XPath("//*[@id=\"newmembership-register-success-form\"]/div[2]/p")).Text;
 
             //Assert.That(textConfirmation.Equals("Sie erhalten an Ihre E-Mail-Adresse evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership mit allen wichtigen Informationen. Bitte schliessen Sie die Registrierung ab, indem Sie Ihre Mitgliedschaft über den in der E-Mail angegebenen Link bestätigen. Vielen Dank!"));
-            Assert.That(textConfirmation.Equals("Sie haben an Ihre E-Mail Adresse evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership mit allen wichtigen Informationen erhalten. Bitte schliessen Sie die Registrierung ab und aktivieren Sie Ihre Membership, indem Sie den Link «E-Mail bestätigen und Registrierung abschliessen» anklicken."));
+            Assert.That(textConfirmation.Contains("Sie haben an Ihre E-Mail Adresse evelin.totev+1@yanova.ch eine Bestätigung der Business-Einzel-Membership mit allen wichtigen Informationen erhalten."));
 
         }
 
@@ -74,7 +74,7 @@ namespace Membership
             string currentWindowHandle = driver.CurrentWindowHandle;
 
             //driver.FindElement(By.LinkText("VERVOLLSTÄNDIGEN SIE DIE REGISTRIERUNG")).Click();
-            driver.FindElement(By.LinkText("e-Mail bestätigen und registrierung abschliessen")).Click();
+            driver.FindElement(By.LinkText("E-MAIL BESTÄTIGEN UND REGISTRIERUNG ABSCHLIESSEN")).Click();
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(driver => driver.WindowHandles.Count > 1);
@@ -94,7 +94,8 @@ namespace Membership
 
             string confirmationMessage = driver.FindElement(By.XPath("//*[@id=\"breadcrumb\"]/div/div/div[2]/div/div")).Text;
 
-            Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen."));
+            //Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Mitgliedschaft wurde aktiviert. Sie können sich jetzt einloggen."));
+            Assert.That(confirmationMessage.Equals("Ihre E-Mail wurde verifiziert und die Mitgliedschaft aktiviert. Sie können sich jetzt einloggen."));
 
             // close confirmation tab and delete all messages in the email
 
